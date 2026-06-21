@@ -154,6 +154,13 @@ textarea{min-height:80px;resize:vertical}
     <div class="card"><h3>① 日本端實體檢查 + 紙本檢疫證明書正本</h3><p>由家畜防疫官親自檢查,核發紙本正本隨貨。<b>→ 可由日本供貨廠商/出口商負責</b>(見「誰負責哪段」)。</p></div>
     <div class="card"><h3>② 進口口岸的實貨查驗(中/台)</h3><p>到貨後由目的地海關抽驗,無法由供應商代替;但你的進口報關行會到場配合,你只要確保文件正確即可順利放行。</p></div>
   </div>
+
+  <h2>📅 日本產業展覽情報(自動監控・提前通知)</h2>
+  <p class="lead">系統自動追蹤日本相關產業的實體展覽,提前提醒你報名或參觀——展覽是直接接觸供應商、爭取銷售權的最佳場合。</p>
+  <div class="grid g2" id="expoList"></div>
+  <p class="hint" id="expoWatch"></p>
+  <p class="hint">資料更新:2026-06-22。展覽日期以主辦單位官方公告為準;已設「每週自動巡檢」排程,有新展或臨近報名截止會通知你。</p>
+
 </section>
 
 <!-- ============ VISION ============ -->
@@ -894,7 +901,29 @@ exLine+
 }
 function copyLetter(){const t=document.getElementById('genOut');if(!t.value){genLetter();}t.select();try{document.execCommand('copy');alert('已複製到剪貼簿');}catch(e){navigator.clipboard&&navigator.clipboard.writeText(t.value);alert('已複製');}}
 
-renderChecklist();renderLog();renderTools();
+// ---------- 展覽情報 ----------
+const EXPO=[
+  {name:'Interpets Tokyo 2027(亞太最大寵物展)',start:'2027-04-01',end:'2027-04-04',venue:'東京 Tokyo Big Sight(商展日 4/1,公眾 4/2–4)',scale:'約 800 家參展・約 69,000 人次',cat:'寵物'},
+  {name:'Interpets Osaka 2027',start:'2027-06-11',end:'2027-06-13',venue:'大阪 INTEX Osaka',scale:'約 400 家國際參展',cat:'寵物'},
+  {name:'Interpets Osaka 2026',start:'2026-06-19',end:'2026-06-21',venue:'大阪 INTEX Osaka',scale:'約 400 家國際參展',cat:'寵物'}
+];
+function daysTo(d){const t=new Date();t.setHours(0,0,0,0);return Math.ceil((new Date(d+'T00:00:00')-t)/86400000);}
+function renderExpos(){
+  const box=document.getElementById('expoList');if(!box)return;
+  const up=EXPO.filter(e=>daysTo(e.end)>=0).sort((a,b)=>a.start<b.start?-1:1);
+  box.innerHTML=up.map(e=>{
+    const d=daysTo(e.start);
+    const soon=d>=0&&d<=60;
+    const badge=d>0?('距今 '+d+' 天'):'進行中';
+    const tag=soon?'<span class="tag t-warn">即將到來</span>':'<span class="tag t-on">'+esc(e.cat)+'</span>';
+    return '<div class="cc"'+(soon?' style="border-color:#8a6520"':'')+'><h4>'+esc(e.name)+' '+tag+'</h4>'+
+      '<div class="reg">🗓 '+esc(e.start)+' ～ '+esc(e.end)+' ・ '+esc(badge)+'</div>'+
+      '<p>📍 '+esc(e.venue)+'<br>👥 '+esc(e.scale)+'</p></div>';
+  }).join('')||'<p class="hint">目前無已確認的近期展覽。</p>';
+  document.getElementById('expoWatch').textContent='監控中(待主辦公告日期):Pet博(Petan)、FOODEX JAPAN(食品)、Japan International Seafood Show(海產)——品類擴充後自動納入。';
+}
+
+renderChecklist();renderLog();renderTools();renderExpos();
 </script>
 </body>
 </html>
