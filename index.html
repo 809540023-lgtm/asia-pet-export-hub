@@ -124,7 +124,7 @@ textarea{min-height:80px;resize:vertical}
   <p class="lead">這是一個可離線開啟的工作台:左邊是各地完整出口流程,右邊是你的工作進度。每天查完資料,到「進度追蹤」按一下 <b>今天到此結束</b>,當天的紀錄就會存進這個網站(存在你的瀏覽器,不上雲)。</p>
 
   <div class="bigstat">
-    <div class="stat"><b>16</b><span>已完成國家/地區(全亞洲擴充中)</span></div>
+    <div class="stat"><b>50</b><span>已完成國家/地區(全亞洲)</span></div>
     <div class="stat"><b>5</b><span>品類(食品·零食·保健·玩具用品·貓砂清潔)</span></div>
     <div class="stat"><b>5</b><span>AI 代理(規劃中)</span></div>
     <div class="stat"><b id="logCount">1</b><span>工作日誌紀錄</span></div>
@@ -201,9 +201,8 @@ textarea{min-height:80px;resize:vertical}
   <h1>全亞洲各國 · 進口規定</h1>
   <p class="lead">目標:涵蓋全亞洲每個國家。共通鐵則 —— <b>含動物成分產品 = 須日本官方獸醫衛生證明書 + 進口國事前許可</b>;玩具、塑膠/礦物貓砂、清潔劑等非動物源品項則走一般海關+各國標準/標示。</p>
 
-  <div class="note"><b>研究進度(滾動更新):</b><br>
-  ✅ 已完成:日本(出口端)、中國、台灣、香港、南韓、蒙古、澳門、北韓、印度、巴基斯坦、孟加拉、斯里蘭卡、尼泊爾、不丹、馬爾地夫、阿富汗。<br>
-  ⏳ 研究中(額度重置後補齊):<b>東南亞</b>(泰越星馬印菲緬柬寮汶萊東帝汶)、<b>中亞與高加索</b>(哈烏土吉塔+喬亞美亞塞)、<b>西亞/中東</b>(海灣六國+以約黎伊拉克伊朗土耳其賽普勒斯等)。</div>
+  <div class="ok note"><b>研究進度:全亞洲 50 個國家/地區已全部完成 ✅</b><br>
+  涵蓋東亞、南亞、東南亞、中亞與高加索、西亞/中東。共通鐵則:含動物成分產品一律需日本官方獸醫衛生證明書(MAFF/動物検疫所)+ 進口國事前許可;多國另有「日本工廠須先經事前認證/列名」的隱性門檻,通常是進入市場最大的時程瓶頸。</div>
 
   <h2>東亞</h2>
   <table>
@@ -230,8 +229,56 @@ textarea{min-height:80px;resize:vertical}
     <tr><td>阿富汗</td><td><span class="tag t-off">無法確認</span></td><td>制度不透明、資料極稀少;出貨前務必取得當地書面確認</td></tr>
   </table>
 
-  <h2>東南亞 / 中亞與高加索 / 西亞中東</h2>
-  <p class="pill">⏳ 這三區研究因使用量上限暫停(7:20pm 東京時間重置),完成後會補進此頁並自動更新部署版本。已知重點:哈薩克/吉爾吉斯屬 EAEU 共同獸醫規定;新加坡走 TradeNet/AVS、泰國 DLD;海灣國家走 SFDA/MOCCAE;戰亂/制裁國(敘利亞、葉門、伊朗部分)實務無正常貿易管道。</p>
+  <h2>東南亞</h2>
+  <table>
+    <tr><th>國家</th><th>含動物成分寵食</th><th>關鍵門檻</th></tr>
+    <tr><td>泰國</td><td><span class="tag t-on">可(最重)</span></td><td>雙軌:AFVC 飼料許可+逐項註冊 / AQI 獸醫證明;含動物蛋白的日本廠須先過 DLD 逐廠稽查並列名(最大瓶頸);泰文標籤</td></tr>
+    <tr><td>越南</td><td><span class="tag t-on">可</span></td><td>日方獸醫證明+DAH 檢疫登錄+飼料流通登錄;2026/1/1 新法 Circular 01 上路;越南文標籤</td></tr>
+    <tr><td>新加坡</td><td><span class="tag t-on">可(較便利)</span></td><td>主管為 AVS,每批 CCP;日本享 BSE/FMD 無疫,熱處理含肉可走自我申報快速通道;含大麻禁止</td></tr>
+    <tr><td>馬來西亞</td><td><span class="tag t-on">可(前置長)</span></td><td>DVS 事前核准約 4–6 個月+MAQIS 准證+日方獸醫證明;含豬源須標示且敏感;含動物源咬膠須走動物產品流程</td></tr>
+    <tr><td>印尼</td><td><span class="tag t-on">可(層級多)</span></td><td>Ditjen PKH 推薦(+來源廠逐廠核准)+Kemendag PI+Barantin 檢疫;2026/10 清真強制令待釐清;印尼文標籤</td></tr>
+    <tr><td>菲律賓</td><td><span class="tag t-on">可(門檻高)</span></td><td>進口商 LTO+國外廠註冊+逐項 CPR+每批 SPSIC(離港前)+日方衛生證明;藥用保健品 2024 起轉 FDA</td></tr>
+    <tr><td>緬甸</td><td><span class="tag t-off">實務受阻</span></td><td>制度上 LBVD 推薦函+商務部許可+日方證明;軍政府 2025 中起近乎停發進口許可、外匯管制</td></tr>
+    <tr><td>柬埔寨</td><td><span class="tag t-on">可</span></td><td>MAFF/GDAHP 進口許可+日方獸醫證明;到貨前 5 天通知;高棉語標籤強制</td></tr>
+    <tr><td>寮國</td><td><span class="tag t-on">可</span></td><td>DLF 進口許可(到貨前≥15 天)+日方動物衛生證明;指定口岸查驗;LNSW 已強制</td></tr>
+    <tr><td>汶萊</td><td><span class="tag t-on">可(資料少)</span></td><td>MPRT 生物安全處進口許可+進口商註冊;含豬源極度敏感、可能被拒</td></tr>
+    <tr><td>東帝汶</td><td><span class="tag t-off">有實質障礙</span></td><td>MAF 許可+WOAH Model Cert No.2 獸醫證明;禁含哺乳類肉粉/骨粉/血粉/脂肪→多數含牛豬羊配方受阻</td></tr>
+  </table>
+
+  <h2>中亞與高加索</h2>
+  <p class="pill">哈薩克、吉爾吉斯、亞美尼亞屬 <b>EAEU 歐亞經濟聯盟</b>:適用統一獸醫證書(第 317 號決定)+ 日本工廠須列入 EAEU 第三國企業名錄(日本廠已在 Rosselkhoznadzor 體系,須確認個別工廠狀態)+ 逐批進口許可。</p>
+  <table>
+    <tr><th>國家</th><th>EAEU</th><th>能否進口 + 關鍵門檻</th></tr>
+    <tr><td>哈薩克</td><td>是</td><td><span class="tag t-on">可</span> 日方獸醫證書+工廠列第三國名錄+進口許可(elicense.kz 線上,2 工作天);俄+哈語標籤。資料最完整</td></tr>
+    <tr><td>吉爾吉斯</td><td>是</td><td><span class="tag t-on">可</span> 規則同哈薩克,但線上化與透明度較低、機關常改組;俄+吉語標籤</td></tr>
+    <tr><td>烏茲別克</td><td>觀察員</td><td><span class="tag t-on">可</span> 本國框架:日方獸醫證書+獸醫委員會進口許可;線上化最佳(my.gov.uz);烏語標示</td></tr>
+    <tr><td>塔吉克</td><td>否</td><td><span class="tag t-on">原則可(資料稀疏)</span> 俄語獸醫證書+三機關流程+第38號決議登記;邊境執行多變,須當地代理</td></tr>
+    <tr><td>土庫曼</td><td>否</td><td><span class="tag t-off">最封閉</span> 農業部核可+政府同意,禽類產品全面禁令;合約須 SCRME 登記;幾乎必須當地代理</td></tr>
+    <tr><td>亞美尼亞</td><td>是</td><td><span class="tag t-on">可</span> 日方獸醫證書+SNUND 進口許可+工廠登記;單一窗口線上;俄+亞美尼亞文。市場極小</td></tr>
+    <tr><td>喬治亞</td><td>否(EU DCFTA)</td><td><span class="tag t-on">可</span> NFA 進口許可(效期1月,50–150 GEL)+日方獸醫證明(對齊歐盟,禁反芻);喬治亞文標籤</td></tr>
+    <tr><td>亞塞拜然</td><td>否</td><td><span class="tag t-on">可</span> AFSA 電子進口執照+日方國際獸醫證明(生產者已登記則免安全證明);亞塞拜然文標籤</td></tr>
+  </table>
+
+  <h2>西亞 / 中東</h2>
+  <p class="pill">海灣 GCC 共通:含動物成分須事前獸醫進口許可+日方官方獸醫證明,且須<b>無豬肉/清真</b>、<b>阿拉伯文+英文雙語標籤</b>。</p>
+  <table>
+    <tr><th>國家</th><th>能否進口</th><th>關鍵門檻</th></tr>
+    <tr><td>沙烏地阿拉伯</td><td><span class="tag t-on">可</span></td><td>SFDA 飼料逐項註冊+自由銷售證明+動物源獸醫證明/清真無豬肉;非食品另須 SABER(PCoC+SCoC)</td></tr>
+    <tr><td>阿聯酋 UAE</td><td><span class="tag t-on">可</span></td><td>MOCCAE 進口許可(30天)+核准清單+分析證明+MAFF 獸醫證明/無豬肉;清關過 ADAFSA/Dubai(不通用)</td></tr>
+    <tr><td>卡達</td><td><span class="tag t-on">可</span></td><td>市政部獸醫許可+日方獸醫證明+MOPH 註冊,Al Nadeeb 通關</td></tr>
+    <tr><td>科威特</td><td><span class="tag t-on">可</span></td><td>PAAFR 獸醫許可(須當地代理)+日方獸醫證明+阿拉伯文標籤</td></tr>
+    <tr><td>巴林</td><td><span class="tag t-on">可(最明確)</span></td><td>獸醫檢疫處許可(bahrain.bh eService)+日方獸醫證明+成分證明</td></tr>
+    <tr><td>阿曼</td><td><span class="tag t-on">可</span></td><td>啟運前 DGAW 飼料獸醫許可(Bayan,效期1月)+日方獸醫證明</td></tr>
+    <tr><td>以色列</td><td><span class="tag t-on">可</span></td><td>IVSAH 進口許可+日方官方獸醫證明+工廠年度認可;希伯來文標籤</td></tr>
+    <tr><td>約旦</td><td><span class="tag t-on">可</span></td><td>農業部獸醫放行+日方獸醫證明+公證原產地;含肉多需清真;阿拉伯文標籤</td></tr>
+    <tr><td>黎巴嫩</td><td><span class="tag t-off">法規可,實務受限</span></td><td>經濟/政治不穩;禁以色列關聯;須當地代理逐案確認</td></tr>
+    <tr><td>土耳其</td><td><span class="tag t-on">可</span></td><td>MoAF 控制證明+日本設施列入認可清單+官方獸醫證明+土耳其文標籤+TAREKS 線上</td></tr>
+    <tr><td>賽普勒斯</td><td><span class="tag t-on">可(有前提)</span></td><td>EU 規則:日本+工廠須列 EU 認可清單→EU 範本獸醫證明+TRACES CHED-P;北賽另循 TRNC</td></tr>
+    <tr><td>伊拉克</td><td><span class="tag t-on">可(流程慢)</span></td><td>ICIGI/CoC 強制認證+農業部獸醫許可+日方獸醫證明;安全與官僚障礙,須當地代理</td></tr>
+    <tr><td>伊朗</td><td><span class="tag t-off">不可行</span></td><td>2018 起寵物食品進口禁令+OFAC 制裁致付款斷鏈</td></tr>
+    <tr><td>葉門</td><td><span class="tag t-off">不可行</span></td><td>內戰分治、無統一主管機關與穩定通關、制裁風險</td></tr>
+    <tr><td>敘利亞</td><td><span class="tag t-off">短期難</span></td><td>2025 制裁大幅解除但付款/銀行/法規/基礎設施未到位</td></tr>
+  </table>
 </section>
 
 <!-- ============ ROLES ============ -->
@@ -487,6 +534,16 @@ function seedLog(){
       '東南亞、中亞/高加索、西亞中東三區因使用量上限暫停,7:20pm(東京)重置後補齊',
       '部署:Claude in Chrome 在使用者帳號建 GitHub repo + Render 靜態網站',
       '待辦:額度重置後補齊三區;補齊後 git push 觸發 Render 自動更新'
+    ]
+  },{
+    date:'2026-06-21', cat:'資料查詢 · 全亞洲完成',
+    title:'全亞洲 50 國/地區研究完成並更新上線',
+    body:[
+      '東南亞完成:泰越星馬印菲(主要市場)+緬柬寮汶萊東帝汶',
+      '中亞與高加索完成:哈薩克/吉爾吉斯/亞美尼亞(EAEU)、烏茲別克、塔吉克、土庫曼、喬治亞、亞塞拜然',
+      '西亞中東完成:海灣六國+以色列/約旦/土耳其/賽普勒斯/伊拉克(可進口);黎巴嫩實務受限;伊朗/葉門不可行;敘利亞短期難',
+      '共通結論:含動物成分一律需日方官方獸醫證明+進口國事前許可;多國有「日本工廠事前認證/列名」隱性門檻',
+      '已更新網站全亞洲分頁並重新部署到 Render(自動更新)'
     ]
   }];
 }
