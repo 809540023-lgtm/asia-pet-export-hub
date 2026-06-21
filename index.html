@@ -520,6 +520,29 @@ textarea{min-height:80px;resize:vertical}
   </div>
   <p class="hint">每跑一輪,系統就更懂「日本→某國→某品類」該怎麼做。知識庫是六個代理共用的大腦,新品類接上來時可直接沿用既有規則,只補差異。</p>
 
+  <h2>Agent Loop 與四層工程</h2>
+  <p><b>Agent Loop(智能體工作循環)</b>是每個 AI 代理內部的運轉方式——不是問一次答一次,而是一個會自我修正的循環:</p>
+  <div class="flow">
+    <span class="node">目標</span><span class="arr">→</span>
+    <span class="node">思考</span><span class="arr">→</span>
+    <span class="node">行動</span><span class="arr">→</span>
+    <span class="node">觀察</span><span class="arr">→</span>
+    <span class="node">評估</span><span class="arr">→</span>
+    <span class="node">修正</span><span class="arr">↺</span>
+    <span class="node">再執行</span>
+  </div>
+  <p>本平台的六個代理各自跑自己的 Loop,並把每輪結果沉澱回<b>共用知識庫</b>——這就是「自學習」的底層機制。</p>
+
+  <p style="margin-top:1em"><b>四層工程</b>把「怎麼讓 AI 真正能用」拆成四層,而本平台已分別落地:</p>
+  <table>
+    <tr><th>層</th><th>一句話定義</th><th>本平台對應(已落地)</th></tr>
+    <tr><td><b>Prompt Engineering</b></td><td>怎麼問 AI</td><td>各代理提示語、供應商邀約信產生器、可重用 Skill 啟動提示語(海產版已產出)</td></tr>
+    <tr><td><b>Context Engineering</b></td><td>AI 看得到什麼資料</td><td>全亞洲 49 目的地准入知識庫 + 案例/教訓庫(架構 L4 知識層)</td></tr>
+    <tr><td><b>Harness Engineering</b></td><td>AI 在什麼工具環境裡執行</td><td>工具箱(准入查詢器/信件產生器)+ 整合連接器 + 瀏覽器/GitHub/Render + 每日排程</td></tr>
+    <tr><td><b>Loop Engineering</b></td><td>誰讓 AI 持續啟動·執行·驗證·修正·沉澱</td><td>每日法規巡檢排程 + 進度知識代理(今天到此結束→沉澱)+ 學習回饋迴圈</td></tr>
+  </table>
+  <div class="ok note"><b>核心觀念:</b>Loop Engineering 不是把 Prompt 寫得更長,而是把 AI Agent 變成一套<b>可控、可驗證、可累積經驗</b>的工作系統。本平台的「排程巡檢(可控啟動)→ 查核步驟(可驗證)→ 知識庫回灌(可累積)」就是這套系統的具體實作。</div>
+
   <h2>分階段藍圖(踏實往下延伸)</h2>
   <ol class="steps">
     <li><b>階段一・試點(已完成):</b>寵物商品 × 全亞洲 50 國,建立第一套准入資料庫、六代理與本工作台網站。</li>
