@@ -65,7 +65,7 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   background:var(--accent);color:#06101f;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
 .agent{border-top:4px solid var(--accent)}
 .agent.a1{border-color:#4aa3ff}.agent.a2{border-color:#36d39a}.agent.a3{border-color:#f0a93b}
-.agent.a4{border-color:#b487ff}.agent.a5{border-color:#ff7eb6}
+.agent.a4{border-color:#b487ff}.agent.a5{border-color:#ff7eb6}.agent.a6{border-color:#f5c542}
 .kbd{font-family:ui-monospace,Menlo,monospace;background:#0b1320;border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:12px}
 /* progress tracker */
 .logbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
@@ -126,7 +126,7 @@ textarea{min-height:80px;resize:vertical}
   <div class="bigstat">
     <div class="stat"><b>50</b><span>已完成國家/地區(全亞洲)</span></div>
     <div class="stat"><b>5</b><span>品類(食品·零食·保健·玩具用品·貓砂清潔)</span></div>
-    <div class="stat"><b>5</b><span>AI 代理(規劃中)</span></div>
+    <div class="stat"><b>6</b><span>AI 代理(含供應商邀約)</span></div>
     <div class="stat"><b id="logCount">1</b><span>工作日誌紀錄</span></div>
   </div>
 
@@ -330,10 +330,19 @@ textarea{min-height:80px;resize:vertical}
 
 <!-- ============ AGENTS ============ -->
 <section class="tab" id="agents">
-  <h1>五個 AI 代理設計</h1>
-  <p class="lead">把整個「出口合規 → 通關物流 → 進度知識 → 行銷」拆成五個分工明確、可協作的 AI 代理。每個代理列出職能、輸入/輸出、所需資源與人類接手點。</p>
+  <h1>六個 AI 代理設計</h1>
+  <p class="lead">把整個「供應商邀約 → 出口合規 → 通關物流 → 進度知識 → 行銷」拆成六個分工明確、可協作的 AI 代理。每個代理列出職能、輸入/輸出、所需資源與人類接手點。</p>
 
   <div class="grid g2">
+    <div class="card agent a6">
+      <span class="chip">Agent 6 ★ 上游</span><h3>供應商邀約代理 Supplier Outreach（會說故事）</h3>
+      <p><b>職能:</b>主動向日本供應商提案、爭取銷售權。核心是「敘事力」——清楚傳達我們是<b>與眾不同的貿易商</b>:從商品開發、商品管理、成本執行到未來行銷,全部由 AI 代理群(AI‑Agg)一站式處理並承擔相關費用;並導入<b>區塊鏈</b>讓交易透明可追溯、降低弊端與人為錯誤。</p>
+      <p><b>爭取銷售權三步:</b>① 索取更多商品資訊供評估 → ② 索取樣品 → ③ 建立順暢完整的聯繫窗口,讓資料往來不受阻。</p>
+      <p><b>願景訊息:</b>把日本優秀產品推向全球,消除過去繁雜的跨區低效問題。</p>
+      <p><b>輸入:</b>目標供應商/展會名單、產品類別、公司簡介與品牌素材。<b>輸出:</b>客製化日文/多語邀約信、商品資訊需求清單、樣品索取、聯繫窗口/CRM 紀錄與後續追蹤。</p>
+      <p><b>資源:</b>供應商名錄、多語生成(日文敬語)、Email/CRM 介接、區塊鏈/智能合約(銷售權與交易留痕)、品牌故事素材庫。</p>
+      <p class="hint">人類接手:正式簽約、費用承諾、樣品評估決策。</p>
+    </div>
     <div class="card agent a1">
       <span class="chip">Agent 1</span><h3>法規情報代理 Regulatory Intelligence</h3>
       <p><b>職能:</b>監控日/中/台/港法規、准入名單、工廠認證名單、疫區(HPAI/ASF)狀態變動,變更即推播。</p>
@@ -373,10 +382,28 @@ textarea{min-height:80px;resize:vertical}
       <h3>協作架構</h3>
       <p>建議一個 <b>編排層(Orchestrator)</b> 串接五個代理:</p>
       <div class="flow">
-        <span class="node">1 情報</span><span class="arr">→</span><span class="node">2 文件</span><span class="arr">→</span><span class="node">3 通關</span><span class="arr">→</span><span class="node">4 進度</span><span class="arr">↺</span><span class="node">5 行銷</span>
+        <span class="node">6 供應商邀約</span><span class="arr">→</span><span class="node">1 情報</span><span class="arr">→</span><span class="node">2 文件</span><span class="arr">→</span><span class="node">3 通關</span><span class="arr">→</span><span class="node">4 進度</span><span class="arr">↺</span><span class="node">5 行銷</span>
       </div>
-      <p class="hint">情報變更觸發文件更新 → 通關執行 → 進度代理全程記錄並回灌知識庫 → 行銷代理依准入市場排序投放。共用一個知識庫與權限控管。</p>
+      <p class="hint">供應商邀約代理談下銷售權與商品/樣品 → 情報代理確認該品類在各國准入 → 文件代理備證 → 通關執行 → 進度代理全程記錄並回灌知識庫 → 行銷代理依准入市場排序投放。全部共用一個知識庫(可上鏈留痕)與權限控管。</p>
     </div>
+  </div>
+
+  <h2>供應商邀約信範本(日文,可直接用)</h2>
+  <div class="card" style="border-top:4px solid #f5c542">
+    <p class="hint">由供應商邀約代理自動生成、可依供應商客製。重點:先講「我們是誰、為何不同」,再提出資訊→樣品→窗口三步請求。</p>
+    <p style="font-size:14px;line-height:1.9">
+    件名:御社の優れた商品を世界へ ― 新しいかたちの貿易パートナーのご提案<br><br>
+    [供應商名] ご担当者様<br><br>
+    突然のご連絡を失礼いたします。私たちは、日本の優れた商品を世界へ届けることを使命とする、新しいかたちの貿易商です。<br><br>
+    従来の貿易では、商品開発・商品管理・コスト管理・海外マーケティングが分断され、煩雑で非効率な「地域間の壁」が大きな負担でした。私たちはこれらをすべて AI エージェント群(AI‑Agg)が一気通貫で担い、関連する費用と実務も当社が引き受けます。さらに取引の透明性とトレーサビリティのためにブロックチェーンを導入し、不正やミスを最小限に抑えます。これが、私たちが「他とは違う貿易商」である理由です。<br><br>
+    つきましては、御社商品の販売権についてご相談させていただきたく、まずは以下をお願いできますと幸いです:<br>
+    1. 評価のための商品情報(成分・規格・希望条件 など)<br>
+    2. 可能であればサンプルのご提供<br>
+    3. 資料のやり取りがスムーズに行えるご担当窓口<br><br>
+    御社商品の価値を、最も適した世界の市場へお届けするお手伝いをさせてください。<br>
+    何卒よろしくお願い申し上げます。
+    </p>
+    <p class="hint">中文要點對照:① 自我介紹為「獨特貿易商」② 痛點=過去跨區分斷低效 ③ 解法=AI‑Agg 全包+承擔費用+區塊鏈透明 ④ 三步請求:商品資訊→樣品→聯繫窗口 ⑤ 願景:把日本好物推向全球。</p>
   </div>
 </section>
 
@@ -544,6 +571,16 @@ function seedLog(){
       '西亞中東完成:海灣六國+以色列/約旦/土耳其/賽普勒斯/伊拉克(可進口);黎巴嫩實務受限;伊朗/葉門不可行;敘利亞短期難',
       '共通結論:含動物成分一律需日方官方獸醫證明+進口國事前許可;多國有「日本工廠事前認證/列名」隱性門檻',
       '已更新網站全亞洲分頁並重新部署到 Render(自動更新)'
+    ]
+  },{
+    date:'2026-06-21', cat:'AI 代理設計',
+    title:'新增第六個代理:供應商邀約代理(會說故事)+ 日文邀約信範本',
+    body:[
+      '定位:主動向日本供應商提案、爭取銷售權,核心是敘事力',
+      '故事主軸:我們是獨特貿易商,商品開發/管理/成本/行銷全由 AI‑Agg 一站包辦並承擔費用',
+      '差異化:導入區塊鏈讓交易透明可追溯、降低弊端與錯誤',
+      '爭取銷售權三步:商品資訊評估 → 樣品 → 順暢聯繫窗口',
+      '已加入網站「六個 AI 代理」分頁,附可直接使用的日文邀約信範本,並重新部署'
     ]
   }];
 }
