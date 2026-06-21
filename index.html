@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本寵物商品出口 ｜ 流程與工作台</title>
+<style>
+:root{
+  --bg:#0e1726; --panel:#16223a; --panel2:#1d2c49; --line:#2a3a5c;
+  --txt:#e6edf7; --muted:#9fb0cc; --accent:#4aa3ff; --accent2:#36d39a;
+  --warn:#f0a93b; --bad:#ef5b6b; --good:#36d39a; --chip:#22324f;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",system-ui,sans-serif;
+  background:linear-gradient(180deg,#0b1320,#0e1726 40%);color:var(--txt);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+header.top{position:sticky;top:0;z-index:20;background:rgba(11,19,32,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:18px;letter-spacing:.5px}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:12px;letter-spacing:0}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs button{background:transparent;color:var(--muted);border:1px solid transparent;
+  padding:8px 13px;border-radius:10px;cursor:pointer;font-size:14px;font-family:inherit;transition:.15s}
+nav.tabs button:hover{color:var(--txt);background:var(--panel)}
+nav.tabs button.active{color:#fff;background:var(--accent);border-color:var(--accent)}
+main{max-width:1080px;margin:0 auto;padding:30px 22px 80px}
+section.tab{display:none;animation:fade .25s}
+section.tab.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:27px;margin:.2em 0 .4em}
+h2{font-size:21px;margin:1.4em 0 .5em;padding-left:12px;border-left:4px solid var(--accent)}
+h3{font-size:16px;margin:1.1em 0 .4em;color:#cfe0ff}
+p{color:#dbe6f6}
+.lead{color:var(--muted);font-size:15px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px;box-shadow:var(--shadow)}
+.card h3{margin-top:0}
+.chip{display:inline-block;background:var(--chip);border:1px solid var(--line);color:#cfe0ff;
+  padding:3px 10px;border-radius:999px;font-size:12px;margin:2px 4px 2px 0}
+.chip.good{background:rgba(54,211,154,.12);border-color:#2c7a5c;color:#8df0c7}
+.chip.warn{background:rgba(240,169,59,.12);border-color:#8a6520;color:#ffd591}
+.chip.bad{background:rgba(239,91,107,.12);border-color:#8a3540;color:#ffb3bd}
+.note{border-left:4px solid var(--warn);background:rgba(240,169,59,.08);padding:12px 14px;border-radius:8px;margin:14px 0;color:#ffe0ad}
+.ok{border-left:4px solid var(--good);background:rgba(54,211,154,.08);color:#bff3dd}
+.bigstat{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+.stat{flex:1;min-width:150px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat b{display:block;font-size:22px}
+.stat span{color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;overflow:hidden;border-radius:10px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:#cfe0ff;font-weight:700}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.tag{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap}
+.t-on{background:rgba(54,211,154,.15);color:#7ef0c2}
+.t-off{background:rgba(239,91,107,.15);color:#ffb3bd}
+.steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+.steps li{counter-increment:s;position:relative;padding:10px 10px 10px 46px;margin:8px 0;background:var(--panel2);
+  border:1px solid var(--line);border-radius:10px}
+.steps li::before{content:counter(s);position:absolute;left:10px;top:10px;width:26px;height:26px;border-radius:50%;
+  background:var(--accent);color:#06101f;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.agent{border-top:4px solid var(--accent)}
+.agent.a1{border-color:#4aa3ff}.agent.a2{border-color:#36d39a}.agent.a3{border-color:#f0a93b}
+.agent.a4{border-color:#b487ff}.agent.a5{border-color:#ff7eb6}
+.kbd{font-family:ui-monospace,Menlo,monospace;background:#0b1320;border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:12px}
+/* progress tracker */
+.logbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.btn{background:var(--accent);color:#06101f;border:none;padding:9px 15px;border-radius:10px;font-weight:700;
+  cursor:pointer;font-family:inherit;font-size:14px;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+.btn.green{background:var(--accent2)}
+.btn.small{padding:6px 11px;font-size:13px}
+input,textarea,select{font-family:inherit;background:#0b1320;color:var(--txt);border:1px solid var(--line);
+  border-radius:9px;padding:9px 11px;font-size:14px;width:100%}
+textarea{min-height:80px;resize:vertical}
+.field{margin:8px 0}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.logentry{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0}
+.logentry .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logentry .date{font-weight:800;color:#cfe0ff}
+.logentry .cat{font-size:12px;color:var(--muted)}
+.logentry ul{margin:8px 0 0;padding-left:20px}
+.logentry li{margin:3px 0}
+.del{background:none;border:none;color:var(--bad);cursor:pointer;font-size:12px}
+.hint{color:var(--muted);font-size:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal.show{display:flex}
+.modal .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;max-width:560px;width:100%;box-shadow:var(--shadow)}
+.checklist{list-style:none;padding:0;margin:8px 0}
+.checklist li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin:6px 0;background:var(--panel2)}
+.checklist input{width:auto;margin-top:3px}
+.footer{color:var(--muted);font-size:12px;text-align:center;margin-top:40px;border-top:1px solid var(--line);padding-top:18px}
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.flow .node{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:7px 11px;font-size:13px}
+.flow .arr{color:var(--accent);font-weight:800}
+.pill{font-size:12px;color:var(--muted)}
+@media(max-width:600px){nav.tabs{width:100%;margin-left:0}h1{font-size:22px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">🐾 日本寵物商品出口 · 流程與工作台<small>Pet Export Ops Hub · 中國 / 台灣 / 香港 · 全亞洲行銷</small></div>
+  <nav class="tabs" id="tabs">
+    <button data-tab="home" class="active">總覽</button>
+    <button data-tab="flow">出口流程</button>
+    <button data-tab="asia">全亞洲各國</button>
+    <button data-tab="roles">誰負責哪段</button>
+    <button data-tab="progress">進度追蹤</button>
+    <button data-tab="agents">五個 AI 代理</button>
+    <button data-tab="mkt">全亞洲行銷</button>
+    <button data-tab="res">資源與連結</button>
+  </nav>
+</header>
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="tab active" id="home">
+  <h1>總覽</h1>
+  <p class="lead">這是一個可離線開啟的工作台:左邊是各地完整出口流程,右邊是你的工作進度。每天查完資料,到「進度追蹤」按一下 <b>今天到此結束</b>,當天的紀錄就會存進這個網站(存在你的瀏覽器,不上雲)。</p>
+
+  <div class="bigstat">
+    <div class="stat"><b>16</b><span>已完成國家/地區(全亞洲擴充中)</span></div>
+    <div class="stat"><b>5</b><span>品類(食品·零食·保健·玩具用品·貓砂清潔)</span></div>
+    <div class="stat"><b>5</b><span>AI 代理(規劃中)</span></div>
+    <div class="stat"><b id="logCount">1</b><span>工作日誌紀錄</span></div>
+  </div>
+
+  <h2>三地現況快照</h2>
+  <table>
+    <tr><th>目的地</th><th>犬貓主糧 / 含肉零食(食品)</th><th>玩具 / 用品 / 礦物貓砂(非食品)</th></tr>
+    <tr><td>中國大陸</td><td><span class="tag t-off">目前受限</span> 日本未獲寵食輸華准入,一般貿易無法合法報關;小量可走跨境電商</td><td><span class="tag t-on">可</span> 一般工業品報關</td></tr>
+    <tr><td>台灣</td><td><span class="tag t-on">可</span> 含偶蹄/禽成分須日方工廠認證+動物檢疫證明書</td><td><span class="tag t-on">可</span> 依稅則輸入規定</td></tr>
+    <tr><td>香港</td><td><span class="tag t-on">可</span> 自由進口;含反芻/豬/禽/奶建議附日方獸醫證明書</td><td><span class="tag t-on">可</span> 完全自由</td></tr>
+  </table>
+
+  <div class="note"><b>最大的商業限制:</b>中國大陸對日本犬貓糧目前未開放(GACC 允許進口國名單未含日本)。下單前務必向中國海關總署與日本動物検疫所再確認最新准入狀態。</div>
+
+  <h2>「是不是都能線上自動申請?」</h2>
+  <p>大部分申報與證明書申請已可線上(日本 NACCS、自由販売証明書、中國 CIFER/單一窗口、台灣防檢署檢疫雲、香港 GETS)。但有兩類環節依法必須實體進行,無法純自動:</p>
+  <div class="grid g2">
+    <div class="card"><h3>① 日本端實體檢查 + 紙本檢疫證明書正本</h3><p>由家畜防疫官親自檢查,核發紙本正本隨貨。<b>→ 可由日本供貨廠商/出口商負責</b>(見「誰負責哪段」)。</p></div>
+    <div class="card"><h3>② 進口口岸的實貨查驗(中/台)</h3><p>到貨後由目的地海關抽驗,無法由供應商代替;但你的進口報關行會到場配合,你只要確保文件正確即可順利放行。</p></div>
+  </div>
+</section>
+
+<!-- ============ FLOW ============ -->
+<section class="tab" id="flow">
+  <h1>出口流程(依地區)</h1>
+  <p class="lead">關鍵原則:決定要走多少流程的,是「原料來源(是否含動物成分)」與「目的地是否要求證明書」,而不是產品用途。</p>
+
+  <h2>A. 日本出口端(所有貨物共通)</h2>
+  <div class="flow">
+    <span class="node">搬入保稅地域</span><span class="arr">→</span>
+    <span class="node">輸出申告(NACCS)</span><span class="arr">→</span>
+    <span class="node">海關審查/檢查</span><span class="arr">→</span>
+    <span class="node">輸出許可</span><span class="arr">→</span>
+    <span class="node">裝船/裝機</span>
+  </div>
+  <h3>含動物成分者:加做動物検疫(動物検疫所 AQS)</h3>
+  <ol class="steps">
+    <li>事前確認進口國受理狀況與家畜衛生條件</li>
+    <li>提出輸出檢查申請書(可走 NACCS 線上)</li>
+    <li>附文件:屠宰/衛生處理證明、市售品販售證明、再出口附原輸入証明影本</li>
+    <li>現物實體檢查(防疫官執行,<b>不可線上</b>)</li>
+    <li>核發輸出検疫証明書正本(可先發 NACCS 合格通知供通關)</li>
+  </ol>
+  <p class="pill">日方官方文件:自由販売証明書(MAFF,僅線上,需 gBizID)· 動物検疫証明書(AQS,紙本正本)· 産地証明書(部分情形)</p>
+
+  <h2>B. 中國大陸進口</h2>
+  <div class="note"><b>前提:</b>日本寵物食品尚未取得輸華准入,以下三層註冊在「國家准入」打開前無法啟動。非食品用品不受此限。</div>
+  <table>
+    <tr><th>層級</th><th>機關</th><th>內容</th><th>申請人</th></tr>
+    <tr><td>① 輸華准入</td><td>海關總署 GACC</td><td>日本+品類列入准入名單</td><td>日本官方(政府對政府)</td></tr>
+    <tr><td>② 境外企業註冊</td><td>GACC / CIFER</td><td>工廠取得在華註冊號</td><td>日本主管部門推薦</td></tr>
+    <tr><td>③ 進口飼料登記證</td><td>農業農村部</td><td>主糧/添加劑/保健品登記</td><td>境內代理機構</td></tr>
+  </table>
+  <p>每批報關:備齊檢疫許可證+日方檢疫證書 → 中國國際貿易單一窗口線上申報(關檢一表)→ 審核繳稅 → 查驗 → 中文標籤查驗 → 放行。中文標籤強制,須符合 GB 10648,禁療效宣稱。</p>
+  <p class="pill">非食品:玩具/礦物貓砂/一般用品走一般報關;植物源貓砂需植物檢疫許可;清潔洗護可能按化妝品邏輯,建議歸類預裁定。</p>
+
+  <h2>C. 台灣進口</h2>
+  <ol class="steps">
+    <li>含偶蹄/禽成分 → 日方工廠須先經防檢署認證(目前約 9 家日本廠);取得日方動物檢疫證明書</li>
+    <li>向防檢署線上申請輸入檢疫(檢疫雲)</li>
+    <li>事前辦出進口廠商登記;寵食在 petfood.moa.gov.tw 申報(首次輸入30日內)</li>
+    <li>報關行經關港貿單一窗口申報(進口日起15天內)</li>
+    <li>海關核定 C1 免驗 / C2 補件 / C3 實體驗貨 → 繳稅放行</li>
+  </ol>
+  <div class="ok note">利多:台灣 2025/11/21 起撤除日本產食品輻射管制,輻射報告與產地證明已不需要。犬貓寵食不適用《飼料管理法》,改走《動物保護法》申報制。</div>
+
+  <h2>D. 香港進口</h2>
+  <p>自由港:寵食/玩具/貓砂/清潔用品零關稅、免進口牌照、自由進口。唯一義務:進口後 14 天內經 GETS(Tradelink/Brio/Ge-TS)電子報關,用 Form 1。含貓/狗成分或 CITES 物種成分才需 AFCD 許可;含反芻/豬/禽/奶建議附日方獸醫證明書。</p>
+</section>
+
+<!-- ============ ASIA ============ -->
+<section class="tab" id="asia">
+  <h1>全亞洲各國 · 進口規定</h1>
+  <p class="lead">目標:涵蓋全亞洲每個國家。共通鐵則 —— <b>含動物成分產品 = 須日本官方獸醫衛生證明書 + 進口國事前許可</b>;玩具、塑膠/礦物貓砂、清潔劑等非動物源品項則走一般海關+各國標準/標示。</p>
+
+  <div class="note"><b>研究進度(滾動更新):</b><br>
+  ✅ 已完成:日本(出口端)、中國、台灣、香港、南韓、蒙古、澳門、北韓、印度、巴基斯坦、孟加拉、斯里蘭卡、尼泊爾、不丹、馬爾地夫、阿富汗。<br>
+  ⏳ 研究中(額度重置後補齊):<b>東南亞</b>(泰越星馬印菲緬柬寮汶萊東帝汶)、<b>中亞與高加索</b>(哈烏土吉塔+喬亞美亞塞)、<b>西亞/中東</b>(海灣六國+以約黎伊拉克伊朗土耳其賽普勒斯等)。</div>
+
+  <h2>東亞</h2>
+  <table>
+    <tr><th>國家/地區</th><th>含動物成分寵食能否從日本進口</th><th>關鍵門檻</th></tr>
+    <tr><td>中國大陸</td><td><span class="tag t-off">目前受限</span></td><td>日本未獲寵食輸華准入;非食品可一般報關;小量走跨境電商</td></tr>
+    <tr><td>台灣</td><td><span class="tag t-on">可</span></td><td>含偶蹄/禽須日方工廠認證+動物檢疫證明書;寵食走動保法申報制</td></tr>
+    <tr><td>香港</td><td><span class="tag t-on">可</span></td><td>自由港;含貓狗/CITES成分才需 AFCD 許可;含反芻/豬/禽/奶建議附獸醫證明</td></tr>
+    <tr><td>南韓</td><td><span class="tag t-on">可(過渡期)</span></td><td>2025/1 新 IHR;需日方官方獸醫證明+製造設施 APQA 核准;寬限期至 2027/12/31(含反芻不適用);韓文標籤;日本核准現況待確認</td></tr>
+    <tr><td>蒙古</td><td><span class="tag t-on">可(資料少)</span></td><td>含動物成分需日方獸醫衛生證書+GASI 事前核准;僅當地法人可進口;蒙古文標籤(MNS 6648)</td></tr>
+    <tr><td>澳門</td><td><span class="tag t-on">多數可,有例外</span></td><td>含動物源須市政署准照+衛生檢疫+日方證明;<b>對日 10 都縣動物源食品禁令(2023 至今仍維持)</b></td></tr>
+    <tr><td>北韓</td><td><span class="tag t-off">否</span></td><td>日本全面貿易禁運(延至 2027/4)+聯合國制裁;無合法商業管道</td></tr>
+  </table>
+
+  <h2>南亞</h2>
+  <table>
+    <tr><th>國家</th><th>含動物成分寵食能否從日本進口</th><th>關鍵門檻</th></tr>
+    <tr><td>印度</td><td><span class="tag t-on">可(制度最完整)</span></td><td><b>出口前須辦 SIP(線上 sip.nic.in/NSWS)+日方 VHC</b>;益生菌新規 2026/1;SIP 費漲至 ₹1000;僅 6 個 AQCS 口岸</td></tr>
+    <tr><td>巴基斯坦</td><td><span class="tag t-on">可</span></td><td>PSW 線上 Import Permit + AQD;<b>Halal 認證為硬門檻</b>;NAFSA 2025 改組中</td></tr>
+    <tr><td>孟加拉</td><td><span class="tag t-on">可</span></td><td>DLS 的 NOC + 日方獸醫證明;商業細則少,須逐案確認</td></tr>
+    <tr><td>斯里蘭卡</td><td><span class="tag t-on">可</span></td><td>DAPH 局長核發 Import Permit;含動物成分多走「飼料法」管道</td></tr>
+    <tr><td>尼泊爾</td><td><span class="tag t-on">可(內陸)</span></td><td>DLS 動物檢疫局 Import Permit + 獸醫證明;經印度轉口疊加規定</td></tr>
+    <tr><td>不丹</td><td><span class="tag t-on">可(市場極小)</span></td><td>BAFRA Import Permit(到貨前 ≥1 週)+ Zoo-sanitary Cert;經印度轉口</td></tr>
+    <tr><td>馬爾地夫</td><td><span class="tag t-on">資料少</span></td><td>動物源食品須 Export Health Certificate;<b>狗禁入</b>;市場極小</td></tr>
+    <tr><td>阿富汗</td><td><span class="tag t-off">無法確認</span></td><td>制度不透明、資料極稀少;出貨前務必取得當地書面確認</td></tr>
+  </table>
+
+  <h2>東南亞 / 中亞與高加索 / 西亞中東</h2>
+  <p class="pill">⏳ 這三區研究因使用量上限暫停(7:20pm 東京時間重置),完成後會補進此頁並自動更新部署版本。已知重點:哈薩克/吉爾吉斯屬 EAEU 共同獸醫規定;新加坡走 TradeNet/AVS、泰國 DLD;海灣國家走 SFDA/MOCCAE;戰亂/制裁國(敘利亞、葉門、伊朗部分)實務無正常貿易管道。</p>
+</section>
+
+<!-- ============ ROLES ============ -->
+<section class="tab" id="roles">
+  <h1>誰負責哪段?(回答:實體環節能不能請日本供貨商處理)</h1>
+  <div class="ok note"><b>結論:可以,而且這是標準做法。</b>日本端的「實體檢查 + 紙本檢疫證明書正本 + 工廠認證」本來就由<b>出口方(日本供貨廠商或其委託的報關行)</b>負責取得並隨貨附上。你要做的是:挑選「已具出口能力/已被目的地認證」的供應商,並用對的貿易條件把責任講清楚。</p></div>
+
+  <h2>責任分工表</h2>
+  <table>
+    <tr><th>環節</th><th>誰做</th><th>你要確認的事</th></tr>
+    <tr><td>日方工廠認證(台灣要求/中國未來准入)</td><td><b>日本工廠</b></td><td>對方工廠是否已在防檢署認可名單;若沒有,願不願意申請</td></tr>
+    <tr><td>日本動物検疫實體檢查</td><td><b>日本出口商/工廠</b></td><td>對方有出口檢疫經驗,能安排防疫官查驗</td></tr>
+    <tr><td>輸出検疫証明書正本(紙本)</td><td><b>日本出口商</b>取得</td><td>正本隨貨寄出,影本先傳給你/報關行</td></tr>
+    <tr><td>自由販売証明書(中國需要)</td><td><b>日本工廠/出口商</b>(MAFF 線上)</td><td>需 gBizID,只有日方能辦</td></tr>
+    <tr><td>商業發票/裝箱單/原產地證明</td><td><b>日本出口商</b></td><td>內容與檢疫證書一致</td></tr>
+    <tr><td>進口檢疫許可/登記證(中)、輸入檢疫申請(台)</td><td><b>你/進口商或代理</b></td><td>合同簽訂前先辦中國檢疫許可</td></tr>
+    <tr><td>進口口岸實貨查驗</td><td><b>目的地海關</b>;你的報關行到場配合</td><td>無法外包給供應商;靠文件正確過關</td></tr>
+    <tr><td>中文標籤/在地標示</td><td><b>你/進口商</b>(也可請供應商代印)</td><td>符合 GB 10648 / 台動保法</td></tr>
+  </table>
+
+  <h2>用貿易條件(Incoterms)把責任綁定</h2>
+  <div class="grid g3">
+    <div class="card"><h3>EXW(出廠交貨)</h3><p>供應商只把貨放工廠,<b>出口檢疫/報關/證明書都要你自己在日本安排</b>。最麻煩,不建議新手。</p></div>
+    <div class="card"><h3>FOB / CIF(建議)</h3><p>供應商負責<b>日本出口報關、檢疫、取得檢疫證明書正本並裝船</b>。你接手目的地進口。<span class="chip good">最常見、責任清楚</span></p></div>
+    <div class="card"><h3>DDP(送到付稅)</h3><p>供應商或其物流負責到「門」含進口清關。最省事但成本高,且對方須懂目的地法規。</p></div>
+  </div>
+  <div class="note">採購合約建議白紙黑字寫明:賣方須提供「動物検疫証明書正本、自由販売証明書(如需)、成分分析、與證書一致的發票/裝箱單」,並承諾工廠維持目的地認證有效;到貨若因日方文件瑕疵被查驗退運,責任歸賣方。</div>
+</section>
+
+<!-- ============ PROGRESS ============ -->
+<section class="tab" id="progress">
+  <h1>進度追蹤 · 工作日誌</h1>
+  <p class="lead">每天查完資料,填一筆紀錄,或直接按「今天到此結束」快速建立當天條目。資料存在你瀏覽器的 localStorage,關掉再開仍在;可隨時匯出 JSON 備份。</p>
+
+  <div class="logbar">
+    <button class="btn green" onclick="endOfDay()">✅ 今天到此結束</button>
+    <button class="btn" onclick="openAdd()">＋ 新增紀錄</button>
+    <button class="btn ghost small" onclick="exportLog()">⤓ 匯出 JSON</button>
+    <label class="btn ghost small" style="cursor:pointer">⤒ 匯入<input type="file" accept="application/json" style="display:none" onchange="importLog(event)"></label>
+    <button class="btn ghost small" onclick="clearLog()">清空</button>
+  </div>
+
+  <h2>準備進度檢查清單</h2>
+  <ul class="checklist" id="checklist"></ul>
+
+  <h2>工作日誌</h2>
+  <div id="logList"></div>
+</section>
+
+<!-- ============ AGENTS ============ -->
+<section class="tab" id="agents">
+  <h1>五個 AI 代理設計</h1>
+  <p class="lead">把整個「出口合規 → 通關物流 → 進度知識 → 行銷」拆成五個分工明確、可協作的 AI 代理。每個代理列出職能、輸入/輸出、所需資源與人類接手點。</p>
+
+  <div class="grid g2">
+    <div class="card agent a1">
+      <span class="chip">Agent 1</span><h3>法規情報代理 Regulatory Intelligence</h3>
+      <p><b>職能:</b>監控日/中/台/港法規、准入名單、工廠認證名單、疫區(HPAI/ASF)狀態變動,變更即推播。</p>
+      <p><b>輸入:</b>官方網站、公告 RSS、海關名單。<b>輸出:</b>變更警示、影響評估、待辦建議。</p>
+      <p><b>資源:</b>網頁監控/爬蟲、官方 API、向量知識庫、定時排程、通知管道(Email/IM)。</p>
+      <p class="hint">人類接手:重大法規解讀、向官方查證。</p>
+    </div>
+    <div class="card agent a2">
+      <span class="chip">Agent 2</span><h3>文件與申辦代理 Documentation &amp; Filing</h3>
+      <p><b>職能:</b>依品類×目的地自動產生文件清單、草擬證明書申請、預填線上表單(NACCS/CIFER/單一窗口/petfood申報)、檢查文件一致性。</p>
+      <p><b>輸入:</b>產品規格、原料表、供應商資料。<b>輸出:</b>填妥的申請草稿、缺件提醒。</p>
+      <p><b>資源:</b>表單範本庫、OCR/文件解析、RPA 表單填寫、gBizID/帳號代填介接、e-簽核。</p>
+      <p class="hint">人類接手:正式送件按鈕、簽章。</p>
+    </div>
+    <div class="card agent a3">
+      <span class="chip">Agent 3</span><h3>通關物流代理 Customs &amp; Logistics</h3>
+      <p><b>職能:</b>協調報關行、追蹤貨況、計算稅費、預警查驗風險、管理標籤合規與時效(如香港14天報關)。</p>
+      <p><b>輸入:</b>訂單、Incoterms、船期。<b>輸出:</b>通關狀態看板、稅費試算、異常告警。</p>
+      <p><b>資源:</b>報關行/貨代 API、船公司追蹤、HS/CCC 稅則資料、匯率、行事曆排程。</p>
+      <p class="hint">人類接手:查驗到場、爭議處理。</p>
+    </div>
+    <div class="card agent a4">
+      <span class="chip">Agent 4</span><h3>進度與知識代理 Progress &amp; Knowledge(本站的引擎)</h3>
+      <p><b>職能:</b>就是處理「今天到此結束」——彙整當天查詢、研究、申辦進度,寫成日誌並更新本網站;維護知識庫與檢查清單。</p>
+      <p><b>輸入:</b>各代理的活動紀錄、你的口述。<b>輸出:</b>每日進度頁、週報、知識卡片。</p>
+      <p><b>資源:</b>對話記憶、靜態網站產生器/CMS、版本控制、摘要模型。</p>
+      <p class="hint">人類接手:確認對外發佈內容。</p>
+    </div>
+    <div class="card agent a5">
+      <span class="chip">Agent 5</span><h3>行銷與在地化代理 Marketing &amp; Localization</h3>
+      <p><b>職能:</b>全亞洲市場研究、在地化文案/素材、電商平台與通路佈署、KOL/廣告投放、合規行銷(避免療效宣稱)。</p>
+      <p><b>輸入:</b>產品賣點、市場數據、品牌素材。<b>輸出:</b>各市場行銷計畫、在地化內容、成效報表。</p>
+      <p><b>資源:</b>市場/關鍵字數據、各國電商與廣告 API、翻譯/多語生成、設計工具、分析儀表板。</p>
+      <p class="hint">人類接手:品牌調性把關、預算核定、廣告法規終審。</p>
+    </div>
+    <div class="card">
+      <h3>協作架構</h3>
+      <p>建議一個 <b>編排層(Orchestrator)</b> 串接五個代理:</p>
+      <div class="flow">
+        <span class="node">1 情報</span><span class="arr">→</span><span class="node">2 文件</span><span class="arr">→</span><span class="node">3 通關</span><span class="arr">→</span><span class="node">4 進度</span><span class="arr">↺</span><span class="node">5 行銷</span>
+      </div>
+      <p class="hint">情報變更觸發文件更新 → 通關執行 → 進度代理全程記錄並回灌知識庫 → 行銷代理依准入市場排序投放。共用一個知識庫與權限控管。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKETING ============ -->
+<section class="tab" id="mkt">
+  <h1>全亞洲行銷佈署</h1>
+  <p class="lead">行銷以「准入可行性」排序:能合法進口的市場先打,受限市場(如中國一般貿易)先用跨境電商試水溫。五個代理在行銷階段如何分工與配置資源如下。</p>
+
+  <h2>市場分層與優先順序</h2>
+  <table>
+    <tr><th>層級</th><th>市場</th><th>進入方式</th><th>主力電商/通路</th></tr>
+    <tr><td>第一波(易)</td><td>台灣、香港、日本內銷</td><td>一般貿易可行</td><td>momo·PChome·蝦皮 / HKTVmall·士多 / Rakuten·Amazon JP</td></tr>
+    <tr><td>第二波(中)</td><td>中國大陸</td><td>跨境電商先行,准入後轉一般貿易</td><td>天貓國際·京東國際·抖音</td></tr>
+    <tr><td>第三波(拓展)</td><td>韓國、東南亞(泰/星/馬/越/印尼/菲)</td><td>逐國查准入+在地代理</td><td>Coupang / Shopee·Lazada·TikTok Shop</td></tr>
+  </table>
+
+  <h2>各代理在「全亞洲行銷」的職能與資源配置</h2>
+  <table>
+    <tr><th>代理</th><th>行銷階段職能</th><th>所需資源</th></tr>
+    <tr><td>1 法規情報</td><td>各國廣告法/標示法/療效宣稱紅線、進口准入排序</td><td>各國法規庫、合規檢核清單</td></tr>
+    <tr><td>2 文件申辦</td><td>產品登錄、商標/在地證照、平台入駐文件</td><td>商標資料庫、平台開店流程範本</td></tr>
+    <tr><td>3 通關物流</td><td>海外倉/保稅倉佈點、跨境履約、退換貨流</td><td>3PL/海外倉 API、跨境物流商</td></tr>
+    <tr><td>4 進度知識</td><td>行銷專案進度、成效歸檔、跨市場最佳實務沉澱</td><td>專案看板、知識庫、報表產生</td></tr>
+    <tr><td>5 行銷在地化</td><td>多語文案、KOL、廣告投放、SEO/ASO、社群經營</td><td>翻譯/生成模型、廣告API、KOL平台、分析工具、預算</td></tr>
+  </table>
+
+  <h2>建議的資源總清單</h2>
+  <div class="grid g3">
+    <div class="card"><h3>數據</h3><p>各國市場規模/競品/關鍵字、海關名單、平台銷售數據、社群輿情。</p></div>
+    <div class="card"><h3>工具/API</h3><p>各國電商開放平台、廣告(Meta/Google/字節/LINE)、翻譯、設計、分析儀表板、RPA。</p></div>
+    <div class="card"><h3>合規</h3><p>各國寵物食品/廣告法規庫、療效宣稱禁用詞表、標示範本。</p></div>
+    <div class="card"><h3>物流</h3><p>海外倉/保稅倉、跨境履約、冷鏈(濕糧)、退貨逆物流。</p></div>
+    <div class="card"><h3>人力</h3><p>在地市場經理、合規顧問、報關行、KOL/代理商、客服多語。</p></div>
+    <div class="card"><h3>預算</h3><p>平台入駐/保證金、廣告投放、樣品與認證費、在地化製作。</p></div>
+  </div>
+  <div class="note">行銷鐵律:全亞洲多數市場(尤其中/台)<b>禁止寵物食品標示預防/治療疾病的功能宣稱</b>。文案一律走「營養/保健」訴求,由法規情報代理把關紅線。</div>
+</section>
+
+<!-- ============ RESOURCES ============ -->
+<section class="tab" id="res">
+  <h1>資源與官方連結</h1>
+  <div class="grid g2">
+    <div class="card"><h3>日本</h3>
+      <p><a href="https://www.maff.go.jp/aqs/tetuzuki/product/47.html" target="_blank">MAFF 輸出畜産物検査手続</a></p>
+      <p><a href="https://www.maff.go.jp/j/syouan/tikusui/siryo/cfs.html" target="_blank">MAFF 飼料/寵食 自由販売証明書</a></p>
+      <p><a href="https://www.maff.go.jp/j/export/e_shoumei/shoumei_system.html" target="_blank">MAFF 出口證明書線上申請系統</a></p>
+      <p><a href="https://www.customs.go.jp/english/summary/export.htm" target="_blank">Japan Customs 出口程序(英)</a> · <a href="https://www.naccs.jp/" target="_blank">NACCS</a></p>
+    </div>
+    <div class="card"><h3>中國大陸</h3>
+      <p><a href="https://cifer.singlewindow.cn/" target="_blank">CIFER 境外企業註冊</a> · <a href="https://ciferquery.singlewindow.cn/" target="_blank">查詢</a></p>
+      <p><a href="https://www.singlewindow.cn/" target="_blank">中國國際貿易單一窗口</a></p>
+      <p><a href="https://online.customs.gov.cn/static/pages/guides/000629009001/000629009001.html" target="_blank">海關檢疫審批辦事指南</a></p>
+      <p><a href="http://law.foodmate.net/show-202100.html" target="_blank">允許進口飼料國家及產品名單(收錄)</a></p>
+    </div>
+    <div class="card"><h3>台灣</h3>
+      <p><a href="https://www.aphia.gov.tw/ws.php?id=9624" target="_blank">防檢署 犬貓食品輸入檢疫條件</a></p>
+      <p><a href="https://cloudapq.aphia.gov.tw/" target="_blank">防檢署 檢疫雲線上申辦</a> · <a href="https://ai.gov.tw/" target="_blank">禽流感專區</a></p>
+      <p><a href="https://petfood.moa.gov.tw/" target="_blank">農業部 寵物食品申報網</a></p>
+      <p><a href="https://portal.sw.nat.gov.tw/" target="_blank">關港貿單一窗口</a> · <a href="https://fbfh.trade.gov.tw/" target="_blank">出進口廠商登記</a></p>
+    </div>
+    <div class="card"><h3>香港</h3>
+      <p><a href="https://www.afcd.gov.hk/english/quarantine/qua_ie/f_a_q.html" target="_blank">AFCD 寵物食品進口 FAQ</a></p>
+      <p><a href="https://www.customs.gov.hk/en/service-enforcement-information/cargo-clearance/import-export-declaration/index.html" target="_blank">香港海關 進出口報關</a></p>
+      <p><a href="https://www.tid.gov.hk/en/our_work/import_export_licensing_control/overview.html" target="_blank">工貿署 進出口牌照管制</a></p>
+    </div>
+  </div>
+  <div class="note">本站為依官方資料整理之流程說明,不構成法律或報關意見。法規與准入名單會變動,正式出口前請以各主管機關當期公告為準,並建議委託專業報關行/貿易顧問協辦。資料查證日期:2026-06-21。</div>
+</section>
+
+<div class="footer">🐾 日本寵物商品出口工作台 · 離線靜態網站 · 進度存於本機瀏覽器 · 建立於 2026-06-21</div>
+</main>
+
+<!-- ADD MODAL -->
+<div class="modal" id="modal">
+  <div class="box">
+    <h2 style="border:0;padding:0;margin-top:0">新增工作紀錄</h2>
+    <div class="field"><label>日期</label><input type="date" id="m_date"></div>
+    <div class="field"><label>類別</label>
+      <select id="m_cat">
+        <option>資料查詢</option><option>法規研究</option><option>文件準備</option>
+        <option>供應商溝通</option><option>申辦送件</option><option>通關物流</option>
+        <option>行銷規劃</option><option>其他</option>
+      </select>
+    </div>
+    <div class="field"><label>標題</label><input id="m_title" placeholder="例:確認日本工廠台灣認證狀態"></div>
+    <div class="field"><label>內容(每行一項,會變成條列)</label><textarea id="m_body" placeholder="查了 GACC 名單&#10;聯絡了 A 供應商&#10;待辦:索取成分分析"></textarea></div>
+    <div class="logbar" style="margin-bottom:0">
+      <button class="btn" onclick="saveEntry()">儲存</button>
+      <button class="btn ghost" onclick="closeAdd()">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- tabs ----------
+document.querySelectorAll('#tabs button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('section.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+// ---------- progress checklist ----------
+const CHECK_KEY='petexport_checklist';
+const checkItems=[
+  '確認各品項原料表(是否含動物成分)',
+  '確認各品項 HS / CCC 稅則號列',
+  '中國:查 GACC 准入名單(日本是否在列)',
+  '台灣:查目標日本工廠是否在防檢署認可名單',
+  '台灣:查日本即時疫區(HPAI/ASF)狀態',
+  '與日本供應商確認 Incoterms 與出具文件責任',
+  '索取日方:動物検疫証明書/自由販売証明書/成分分析',
+  '辦理出進口廠商登記(台灣)',
+  '台灣寵物食品申報網註冊',
+  '備妥中文標籤(符合 GB10648 / 動保法)',
+  '指定報關行/貨代',
+];
+function loadChecks(){return JSON.parse(localStorage.getItem(CHECK_KEY)||'{}');}
+function renderChecklist(){
+  const st=loadChecks(); const ul=document.getElementById('checklist'); ul.innerHTML='';
+  checkItems.forEach((t,i)=>{
+    const li=document.createElement('li');
+    const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!st[i];
+    cb.onchange=()=>{const s=loadChecks();s[i]=cb.checked;localStorage.setItem(CHECK_KEY,JSON.stringify(s));};
+    const sp=document.createElement('span');sp.textContent=t;
+    li.appendChild(cb);li.appendChild(sp);ul.appendChild(li);
+  });
+}
+
+// ---------- work log ----------
+const LOG_KEY='petexport_log';
+function seedLog(){
+  return [{
+    date:'2026-06-21', cat:'資料查詢 · 法規研究',
+    title:'啟動:日本→中/台/港 寵物商品出口流程全面研究',
+    body:[
+      '完成日本出口端流程研究(動物検疫所 AQS、植物防疫所、税関、NACCS、自由販売証明書)',
+      '完成中國大陸進口研究:確認日本寵物食品尚未取得輸華准入;三層監管(GACC准入→CIFER企業註冊→農業農村部登記證)',
+      '完成台灣進口研究:含偶蹄/禽須日方工廠認證+動物検疫証明書;2025/11/21 撤除日本食品輻射管制',
+      '完成香港進口研究:自由港,Form 1 報關,含貓狗/CITES成分才需 AFCD 許可',
+      '釐清線上 vs 實體:申報與證明書多可線上;日方實體檢查+紙本正本、進口口岸實貨查驗須實體',
+      '釐清責任分工:日方實體環節可由供貨廠商/出口商負責(建議 FOB/CIF),工廠認證須日本工廠申請',
+      '產出 Word 完整流程指南;建立本工作台網站',
+      '待辦:逐品項確認原料與稅則;向 GACC/AQS 再確認准入;盤點目標日本供應商認證狀態'
+    ]
+  },{
+    date:'2026-06-21', cat:'資料查詢 · 全亞洲擴充',
+    title:'擴充至全亞洲 + 規劃 GitHub/Render 部署',
+    body:[
+      '完成東亞其餘:南韓(2025/1新IHR+設施核准)、蒙古、澳門(對日10都縣禁令)、北韓(禁運,無管道)',
+      '完成整個南亞:印度(SIP+VHC,制度最完整)、巴基斯坦(PSW+Halal)、孟加拉、斯里蘭卡、尼泊爾、不丹、馬爾地夫(狗禁入)、阿富汗(無法確認)',
+      '東南亞、中亞/高加索、西亞中東三區因使用量上限暫停,7:20pm(東京)重置後補齊',
+      '部署:Claude in Chrome 在使用者帳號建 GitHub repo + Render 靜態網站',
+      '待辦:額度重置後補齊三區;補齊後 git push 觸發 Render 自動更新'
+    ]
+  }];
+}
+function loadLog(){let d=localStorage.getItem(LOG_KEY);if(!d){const s=seedLog();localStorage.setItem(LOG_KEY,JSON.stringify(s));return s;}return JSON.parse(d);}
+function saveLog(a){localStorage.setItem(LOG_KEY,JSON.stringify(a));}
+function renderLog(){
+  const a=loadLog();const wrap=document.getElementById('logList');wrap.innerHTML='';
+  document.getElementById('logCount').textContent=a.length;
+  a.slice().reverse().forEach((e,ri)=>{
+    const realIdx=a.length-1-ri;
+    const div=document.createElement('div');div.className='logentry';
+    const body=(e.body||[]).map(x=>`<li>${esc(x)}</li>`).join('');
+    div.innerHTML=`<div class="meta"><span class="date">📅 ${esc(e.date)}</span>
+      <span class="cat">${esc(e.cat||'')} <button class="del" onclick="delEntry(${realIdx})">刪除</button></span></div>
+      <h3 style="margin:.4em 0">${esc(e.title||'(無標題)')}</h3>
+      ${body?`<ul>${body}</ul>`:''}`;
+    wrap.appendChild(div);
+  });
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function delEntry(i){if(!confirm('刪除這筆紀錄?'))return;const a=loadLog();a.splice(i,1);saveLog(a);renderLog();}
+
+// add modal
+function openAdd(){document.getElementById('m_date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('m_title').value='';document.getElementById('m_body').value='';
+  document.getElementById('modal').classList.add('show');}
+function closeAdd(){document.getElementById('modal').classList.remove('show');}
+function saveEntry(){
+  const date=document.getElementById('m_date').value||new Date().toISOString().slice(0,10);
+  const cat=document.getElementById('m_cat').value;
+  const title=document.getElementById('m_title').value.trim();
+  const body=document.getElementById('m_body').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!title&&!body.length){alert('請至少填標題或內容');return;}
+  const a=loadLog();a.push({date,cat,title,body});saveLog(a);renderLog();closeAdd();
+}
+// end of day quick log
+function endOfDay(){
+  const date=new Date().toISOString().slice(0,10);
+  const txt=prompt('今天到此結束 — 簡述今天的進度(每段用句號或換行分隔),可留空:','');
+  const body=txt?txt.split(/\n|。/).map(s=>s.trim()).filter(Boolean):['(當天已收工,未填寫摘要)'];
+  const a=loadLog();a.push({date,cat:'每日收工',title:`工作進度 — ${date}`,body});saveLog(a);renderLog();
+  document.querySelector('[data-tab=progress]').click();
+  alert('已記錄今天的進度 ✅');
+}
+function exportLog(){
+  const data={log:loadLog(),checklist:loadChecks(),exportedAt:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const u=URL.createObjectURL(blob);const x=document.createElement('a');
+  x.href=u;x.download='petexport_progress_'+new Date().toISOString().slice(0,10)+'.json';x.click();URL.revokeObjectURL(u);
+}
+function importLog(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(d.log)saveLog(d.log);if(d.checklist)localStorage.setItem(CHECK_KEY,JSON.stringify(d.checklist));renderLog();renderChecklist();alert('匯入完成');}catch(e){alert('檔案格式錯誤');}};
+  r.readAsText(f);}
+function clearLog(){if(!confirm('清空所有日誌與檢查清單?此動作無法復原。'))return;localStorage.removeItem(LOG_KEY);localStorage.removeItem(CHECK_KEY);renderLog();renderChecklist();}
+
+renderChecklist();renderLog();
+</script>
+</body>
+</html>
