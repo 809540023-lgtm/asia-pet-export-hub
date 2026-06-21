@@ -58,6 +58,11 @@ tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 .tag{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap}
 .t-on{background:rgba(54,211,154,.15);color:#7ef0c2}
 .t-off{background:rgba(239,91,107,.15);color:#ffb3bd}
+.t-warn{background:rgba(240,169,59,.15);color:#ffd591}
+.cc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.cc h4{margin:0 0 4px;font-size:15px;color:#cfe0ff}
+.cc .reg{font-size:11px;color:var(--muted)}
+.cc p{margin:6px 0 0;font-size:13px;color:#cdd9ec}
 .steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
 .steps li{counter-increment:s;position:relative;padding:10px 10px 10px 46px;margin:8px 0;background:var(--panel2);
   border:1px solid var(--line);border-radius:10px}
@@ -110,6 +115,7 @@ textarea{min-height:80px;resize:vertical}
     <button data-tab="vision">願景使命</button>
     <button data-tab="flow">出口流程</button>
     <button data-tab="asia">全亞洲各國</button>
+    <button data-tab="tools">工具箱</button>
     <button data-tab="roles">誰負責哪段</button>
     <button data-tab="progress">進度追蹤</button>
     <button data-tab="agents">六個 AI 代理</button>
@@ -308,6 +314,35 @@ textarea{min-height:80px;resize:vertical}
     <tr><td>葉門</td><td><span class="tag t-off">不可行</span></td><td>內戰分治、無統一主管機關與穩定通關、制裁風險</td></tr>
     <tr><td>敘利亞</td><td><span class="tag t-off">短期難</span></td><td>2025 制裁大幅解除但付款/銀行/法規/基礎設施未到位</td></tr>
   </table>
+</section>
+
+<!-- ============ TOOLS ============ -->
+<section class="tab" id="tools">
+  <h1>工具箱(知識層 → 功能化)</h1>
+  <p class="lead">把資料變成可操作的工具:① 准入查詢器——即時篩選全亞洲目的地;② 供應商邀約信產生器——一鍵生成日文邀約信。這是平台「自學習/自動化」往落地的第一步。</p>
+
+  <h2>① 准入查詢器</h2>
+  <div class="logbar">
+    <input id="toolSearch" placeholder="搜尋國家或關鍵字…" style="max-width:240px" oninput="renderTools()">
+    <select id="toolRegion" onchange="renderTools()" style="max-width:160px;width:auto">
+      <option value="">全部區域</option><option>東亞</option><option>東南亞</option><option>南亞</option><option>中亞與高加索</option><option>西亞/中東</option>
+    </select>
+    <select id="toolStatus" onchange="renderTools()" style="max-width:170px;width:auto">
+      <option value="">全部狀態</option><option value="ok">可進口</option><option value="bad">受限/不可</option>
+    </select>
+    <span class="hint" id="toolCount"></span>
+  </div>
+  <div class="grid g3" id="toolResults"></div>
+  <p class="hint" style="margin-top:8px">註:此為「含動物成分寵物食品」的進口可行性概況;非食品(玩具/礦物貓砂)門檻通常更低。結論會變動,正式出貨前請以官方當期公告為準。</p>
+
+  <h2 style="margin-top:1.8em">② 供應商邀約信產生器(日文)</h2>
+  <div class="card">
+    <div class="field"><label>供應商 / 公司名稱</label><input id="genName" placeholder="例:〇〇水産株式会社 / 〇〇ペットフード株式会社"></div>
+    <div class="field"><label>產品名稱或類別</label><input id="genProduct" placeholder="例:冷凍ホタテ、犬猫用おやつ…"></div>
+    <div class="field"><label>想強調的一句話(可留空)</label><input id="genExtra" placeholder="例:御社のブランド価値を、最も適した世界の市場へ"></div>
+    <div class="logbar"><button class="btn" onclick="genLetter()">產生邀約信</button><button class="btn ghost small" onclick="copyLetter()">複製</button></div>
+    <textarea id="genOut" style="min-height:300px;margin-top:8px" readonly placeholder="按「產生邀約信」後,可直接寄出的日文邀約信會出現在這裡。"></textarea>
+  </div>
 </section>
 
 <!-- ============ ROLES ============ -->
@@ -748,7 +783,95 @@ function importLog(ev){const f=ev.target.files[0];if(!f)return;const r=new FileR
   r.readAsText(f);}
 function clearLog(){if(!confirm('清空所有日誌與檢查清單?此動作無法復原。'))return;localStorage.removeItem(LOG_KEY);localStorage.removeItem(CHECK_KEY);renderLog();renderChecklist();}
 
-renderChecklist();renderLog();
+// ---------- access checker ----------
+const PETDATA=[
+  {c:'中國大陸',r:'東亞',lvl:'warn',s:'目前受限',note:'日本未獲寵食輸華准入;非食品可一般報關;小量可走跨境電商'},
+  {c:'台灣',r:'東亞',lvl:'ok',s:'可',note:'含偶蹄/禽成分須日方工廠認證+動物檢疫證明書;寵食走動保法申報'},
+  {c:'香港',r:'東亞',lvl:'ok',s:'可',note:'自由港;含貓狗/CITES成分才需AFCD許可;含反芻/豬/禽/奶建議附獸醫證明'},
+  {c:'南韓',r:'東亞',lvl:'ok',s:'可(過渡期)',note:'2025新IHR;日方獸醫證明+製造設施APQA核准;寬限至2027/12/31'},
+  {c:'蒙古',r:'東亞',lvl:'ok',s:'可',note:'日方獸醫衛生證書+GASI事前核准;僅當地法人可進口'},
+  {c:'澳門',r:'東亞',lvl:'warn',s:'多數可',note:'含動物源須市政署准照+衛生檢疫;對日10都縣動物源食品禁令仍在'},
+  {c:'北韓',r:'東亞',lvl:'no',s:'不可',note:'日本全面貿易禁運+聯合國制裁,無合法商業管道'},
+  {c:'泰國',r:'東南亞',lvl:'ok',s:'可(最重)',note:'含動物蛋白日廠須先過DLD逐廠稽查列名;AFVC許可+AQI證明'},
+  {c:'越南',r:'東南亞',lvl:'ok',s:'可',note:'日方獸醫證明+DAH檢疫登錄+飼料流通登錄;2026/1新法'},
+  {c:'新加坡',r:'東南亞',lvl:'ok',s:'可(較便利)',note:'AVS每批CCP;日本無BSE/FMD,熱處理含肉可走快速通道'},
+  {c:'馬來西亞',r:'東南亞',lvl:'ok',s:'可(前置長)',note:'DVS事前核准約4-6個月+MAQIS准證+日方獸醫證明;含豬敏感'},
+  {c:'印尼',r:'東南亞',lvl:'ok',s:'可(層級多)',note:'PKH推薦+來源廠核准+Barantin檢疫;清真規範待釐清'},
+  {c:'菲律賓',r:'東南亞',lvl:'ok',s:'可(門檻高)',note:'進口商LTO+國外廠註冊+逐項CPR+每批SPSIC'},
+  {c:'緬甸',r:'東南亞',lvl:'warn',s:'實務受阻',note:'軍政府近乎停發進口許可、外匯管制;制度上需LBVD推薦+商務部許可'},
+  {c:'柬埔寨',r:'東南亞',lvl:'ok',s:'可',note:'GDAHP進口許可+日方獸醫證明;到貨前5天通知;高棉語標籤'},
+  {c:'寮國',r:'東南亞',lvl:'ok',s:'可',note:'DLF進口許可(到貨前≥15天)+日方動物衛生證明'},
+  {c:'汶萊',r:'東南亞',lvl:'ok',s:'可(資料少)',note:'MPRT生物安全處進口許可;含豬源極度敏感'},
+  {c:'東帝汶',r:'東南亞',lvl:'warn',s:'有實質障礙',note:'禁含哺乳類肉粉/骨粉/血粉→多數含牛豬羊配方受阻'},
+  {c:'印度',r:'南亞',lvl:'ok',s:'可(制度最完整)',note:'出口前須辦SIP(線上)+日方VHC;益生菌新規2026/1;僅6個AQCS口岸'},
+  {c:'巴基斯坦',r:'南亞',lvl:'ok',s:'可',note:'PSW線上Import Permit+AQD;Halal認證為硬門檻'},
+  {c:'孟加拉',r:'南亞',lvl:'ok',s:'可',note:'DLS的NOC+日方獸醫證明;商業細則少'},
+  {c:'斯里蘭卡',r:'南亞',lvl:'ok',s:'可',note:'DAPH局長核發Import Permit;含動物成分多走飼料法'},
+  {c:'尼泊爾',r:'南亞',lvl:'ok',s:'可(內陸)',note:'DLS動物檢疫局Import Permit+獸醫證明;經印度轉口'},
+  {c:'不丹',r:'南亞',lvl:'ok',s:'可(市場極小)',note:'BAFRA Import Permit(到貨前≥1週)+Zoo-sanitary Cert;經印度轉口'},
+  {c:'馬爾地夫',r:'南亞',lvl:'warn',s:'資料少',note:'動物源食品須EHC;狗禁入;市場極小'},
+  {c:'阿富汗',r:'南亞',lvl:'no',s:'無法確認',note:'制度不透明、資料稀少;出貨前須當地書面確認'},
+  {c:'哈薩克',r:'中亞與高加索',lvl:'ok',s:'可',note:'EAEU:日方獸醫證書+工廠列第三國名錄+進口許可(線上,2工作天)'},
+  {c:'吉爾吉斯',r:'中亞與高加索',lvl:'ok',s:'可',note:'EAEU規則同哈薩克,但線上化與透明度較低、機關常改組'},
+  {c:'烏茲別克',r:'中亞與高加索',lvl:'ok',s:'可',note:'本國框架:日方獸醫證書+獸醫委員會進口許可;線上化最佳(my.gov.uz)'},
+  {c:'塔吉克',r:'中亞與高加索',lvl:'warn',s:'原則可(資料稀疏)',note:'俄語獸醫證書+三機關流程+第38號決議登記;邊境執行多變'},
+  {c:'土庫曼',r:'中亞與高加索',lvl:'warn',s:'最封閉',note:'農業部核可+政府同意;禽類產品全面禁令;合約須SCRME登記'},
+  {c:'亞美尼亞',r:'中亞與高加索',lvl:'ok',s:'可',note:'EAEU:日方獸醫證書+SNUND進口許可+工廠登記;市場極小'},
+  {c:'喬治亞',r:'中亞與高加索',lvl:'ok',s:'可',note:'NFA進口許可(效期1月,50-150GEL)+日方獸醫證明(對齊歐盟,禁反芻)'},
+  {c:'亞塞拜然',r:'中亞與高加索',lvl:'ok',s:'可',note:'AFSA電子進口執照+日方國際獸醫證明(生產者已登記則免安全證明)'},
+  {c:'沙烏地阿拉伯',r:'西亞/中東',lvl:'ok',s:'可',note:'SFDA飼料逐項註冊+自由銷售證明+無豬肉/清真;非食品另須SABER'},
+  {c:'阿聯酋',r:'西亞/中東',lvl:'ok',s:'可',note:'MOCCAE進口許可(30天)+核准清單+MAFF獸醫證明/無豬肉'},
+  {c:'卡達',r:'西亞/中東',lvl:'ok',s:'可',note:'市政部獸醫許可+日方獸醫證明+MOPH註冊;Al Nadeeb通關'},
+  {c:'科威特',r:'西亞/中東',lvl:'ok',s:'可',note:'PAAFR獸醫許可(須當地代理)+日方獸醫證明+阿拉伯文標籤'},
+  {c:'巴林',r:'西亞/中東',lvl:'ok',s:'可(最明確)',note:'獸醫檢疫處許可(eService)+日方獸醫證明+成分證明'},
+  {c:'阿曼',r:'西亞/中東',lvl:'ok',s:'可',note:'啟運前DGAW飼料獸醫許可(Bayan,效期1月)+日方獸醫證明'},
+  {c:'以色列',r:'西亞/中東',lvl:'ok',s:'可',note:'IVSAH進口許可+日方官方獸醫證明+工廠年度認可;希伯來文標籤'},
+  {c:'約旦',r:'西亞/中東',lvl:'ok',s:'可',note:'農業部獸醫放行+日方獸醫證明+公證原產地;含肉多需清真'},
+  {c:'黎巴嫩',r:'西亞/中東',lvl:'warn',s:'法規可,實務受限',note:'經濟/政治不穩;禁以色列關聯;須當地代理逐案確認'},
+  {c:'土耳其',r:'西亞/中東',lvl:'ok',s:'可',note:'MoAF控制證明+日本設施列入認可清單+官方獸醫證明+TAREKS線上'},
+  {c:'賽普勒斯',r:'西亞/中東',lvl:'ok',s:'可(有前提)',note:'EU規則:日本+工廠須列EU認可清單→EU範本獸醫證明+TRACES CHED-P'},
+  {c:'伊拉克',r:'西亞/中東',lvl:'ok',s:'可(流程慢)',note:'ICIGI/CoC強制認證+農業部獸醫許可+日方獸醫證明;須當地代理'},
+  {c:'伊朗',r:'西亞/中東',lvl:'no',s:'不可行',note:'2018起寵物食品進口禁令+OFAC制裁致付款斷鏈'},
+  {c:'葉門',r:'西亞/中東',lvl:'no',s:'不可行',note:'內戰分治、無統一主管機關與穩定通關、制裁風險'},
+  {c:'敘利亞',r:'西亞/中東',lvl:'warn',s:'短期難',note:'2025制裁大幅解除但付款/銀行/法規/基礎設施未到位'}
+];
+function lvlTag(d){const m={ok:['t-on','可'],warn:['t-warn','留意'],no:['t-off','不可']};const t=m[d.lvl];return '<span class="tag '+t[0]+'">'+d.s+'</span>';}
+function renderTools(){
+  const q=(document.getElementById('toolSearch').value||'').trim();
+  const rg=document.getElementById('toolRegion').value;
+  const st=document.getElementById('toolStatus').value;
+  const box=document.getElementById('toolResults');if(!box)return;
+  const list=PETDATA.filter(d=>{
+    if(rg&&d.r!==rg)return false;
+    if(st==='ok'&&d.lvl!=='ok')return false;
+    if(st==='bad'&&d.lvl==='ok')return false;
+    if(q&&!(d.c.includes(q)||d.note.includes(q)||d.s.includes(q)))return false;
+    return true;
+  });
+  document.getElementById('toolCount').textContent='共 '+list.length+' 個目的地';
+  box.innerHTML=list.map(d=>'<div class="cc"><h4>'+esc(d.c)+' '+lvlTag(d)+'</h4><div class="reg">'+esc(d.r)+'</div><p>'+esc(d.note)+'</p></div>').join('')||'<p class="hint">沒有符合的結果。</p>';
+}
+function genLetter(){
+  const n=(document.getElementById('genName').value||'[供應商名]').trim()||'[供應商名]';
+  const p=(document.getElementById('genProduct').value||'御社の商品').trim()||'御社の商品';
+  const ex=(document.getElementById('genExtra').value||'').trim();
+  const exLine=ex?('\n'+ex+'\n'):'';
+  const L=
+'件名:御社の優れた商品を世界へ ― 新しいかたちの貿易パートナーのご提案\n\n'+
+n+' ご担当者様\n\n'+
+'突然のご連絡を失礼いたします。私たちは、日本の優れた商品を世界へ届けることを使命とする、新しいかたちの貿易商です。\n\n'+
+'従来の貿易では、商品開発・商品管理・コスト管理・海外マーケティングが分断され、煩雑で非効率な「地域間の壁」が大きな負担でした。私たちはこれらをすべて AI エージェント群(AI-Agg)が一気通貫で担い、関連する費用と実務も当社が引き受けます。さらに取引の透明性とトレーサビリティのためにブロックチェーンを導入し、不正やミスを最小限に抑えます。これが、私たちが「他とは違う貿易商」である理由です。\n\n'+
+'つきましては、'+p+'の販売権についてご相談させていただきたく、まずは以下をお願いできますと幸いです:\n'+
+'1. 評価のための商品情報(成分・規格・希望条件 など)\n'+
+'2. 可能であればサンプルのご提供\n'+
+'3. 資料のやり取りがスムーズに行えるご担当窓口\n'+
+exLine+
+'\n御社商品の価値を、最も適した世界の市場へお届けするお手伝いをさせてください。\n何卒よろしくお願い申し上げます。';
+  document.getElementById('genOut').value=L;
+}
+function copyLetter(){const t=document.getElementById('genOut');if(!t.value){genLetter();}t.select();try{document.execCommand('copy');alert('已複製到剪貼簿');}catch(e){navigator.clipboard&&navigator.clipboard.writeText(t.value);alert('已複製');}}
+
+renderChecklist();renderLog();renderTools();
 </script>
 </body>
 </html>
