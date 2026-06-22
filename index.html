@@ -120,6 +120,7 @@ textarea{min-height:80px;resize:vertical}
     <button data-tab="progress">進度追蹤</button>
     <button data-tab="agents">六個 AI 代理</button>
     <button data-tab="system">平台系統</button>
+    <button data-tab="roadmap">建置藍圖</button>
     <button data-tab="mkt">全亞洲行銷</button>
     <button data-tab="res">資源與連結</button>
   </nav>
@@ -574,6 +575,68 @@ textarea{min-height:80px;resize:vertical}
   <div class="note">本頁為平台願景與系統設計藍圖;部分自學習與連接器功能屬規劃中,將分階段實作。本工作台(進度追蹤+全亞洲准入資料庫)是已落地的第一步。</div>
 </section>
 
+<!-- ============ ROADMAP ============ -->
+<section class="tab" id="roadmap">
+  <h1>建置藍圖:自建電商平台 × 全亞洲(全程 AI 代理)</h1>
+  <p class="lead">目標:作為日本公司,建立一個獨立電商平台,把日本寵物產品行銷至全亞洲;供應鏈招募、報關合規、各國(含目的地)行銷全部由 AI 代理群(AI‑Agg)執行。以下是六階段完整進度。</p>
+
+  <div class="note"><b>規劃假設(可調整):</b>日本法人已具備;首波市場依准入易度選 <b>台灣 / 香港 / 新加坡 + 日本內銷</b>,中國大陸走<b>跨境電商</b>試點(寵食一般貿易未開放);時程以「啟動後第 N 月(M)」相對表示,約 12–18 個月達全亞洲規模化。</div>
+
+  <h2>階段時程總覽</h2>
+  <table>
+    <tr><th>階段</th><th>期間</th><th>主責 AI 代理</th><th>關鍵里程碑</th></tr>
+    <tr><td><b>P0 基礎與品牌</b></td><td>M0–M1</td><td>進度知識</td><td>確立品類/品牌/AI 營運模型與知識庫、選定首波市場</td></tr>
+    <tr><td><b>P1 供應鏈招募</b></td><td>M1–M4(持續)</td><td>供應商邀約</td><td>招募日本供應商、取得商品資料+樣品、簽 FOB/CIF 銷售權、上鏈留痕</td></tr>
+    <tr><td><b>P2 自建電商平台(MVP)</b></td><td>M2–M5</td><td>進度知識 + 行銷</td><td>多語多幣別平台、商品上架、AI 定價/成本執行、准入過濾</td></tr>
+    <tr><td><b>P3 合規與物流自動化</b></td><td>M4–M6</td><td>文件申辦 + 通關物流</td><td>各市場報關自動化、報關行/3PL/冷鏈介接、標籤合規、首批試出貨</td></tr>
+    <tr><td><b>P4 首波上線 + 行銷</b></td><td>M5–M8</td><td>行銷在地化</td><td>台港星+日內銷上線、各國在地化+KOL/廣告、成效儀表板</td></tr>
+    <tr><td><b>P5 擴張·多品類·自學習</b></td><td>M8–M18</td><td>法規情報 + 全代理</td><td>第二三波市場、加海產/食品品類、學習迴圈、平台化 SaaS</td></tr>
+  </table>
+
+  <h2>各階段細節</h2>
+  <div class="grid g2">
+    <div class="card"><h3>P0 基礎與品牌(M0–M1)</h3>
+      <p><b>目標:</b>把營運骨架立起來。</p>
+      <p><b>任務:</b>定義品類與品牌定位;建立共用知識庫(沿用本平台 49 國准入資料);確立 AI‑Agg 營運模型與權限/HITL;選定首波市場與金流/法務架構。</p>
+      <p><b>交付:</b>品牌與品類清單、知識庫、營運手冊。<b>依賴:</b>無(起點)。</p></div>
+    <div class="card"><h3>P1 供應鏈招募(M1–M4,持續)</h3>
+      <p><b>目標:</b>把日本廠商拉進供應鏈。</p>
+      <p><b>任務:</b>建供應商名錄(Interpets 等展會+漁協/工廠);供應商邀約代理發日文邀約信→索取商品資訊→樣品→簽 FOB/CIF 銷售權;區塊鏈記錄銷售權與交易留痕;盤點各廠目的國工廠認證狀態。</p>
+      <p><b>交付:</b>N 家簽約供應商、商品主檔、樣品評估。<b>依賴:</b>P0 品類定義。</p></div>
+    <div class="card"><h3>P2 自建電商平台 MVP(M2–M5)</h3>
+      <p><b>目標:</b>能賣的獨立平台。</p>
+      <p><b>任務:</b>多語(中英日+在地語)多幣別;商品由供應商主檔上架;AI 定價/成本執行引擎;<b>准入過濾</b>(只對「可進口」市場顯示該品項);金流/會員/客服。</p>
+      <p><b>交付:</b>平台 MVP + 試營運。<b>依賴:</b>P1 商品資料。</p></div>
+    <div class="card"><h3>P3 合規與物流自動化(M4–M6)</h3>
+      <p><b>目標:</b>下單到出貨全自動。</p>
+      <p><b>任務:</b>文件申辦代理依「品項×目的地」自動備證/填單;通關物流代理介接報關行/3PL/冷鏈、試算稅費、追蹤;中文/在地標籤合規;首批試出貨(台港星)。</p>
+      <p><b>交付:</b>首批成功通關出貨、SOP 沉澱。<b>依賴:</b>P1 工廠認證、P2 訂單流。</p></div>
+    <div class="card"><h3>P4 首波上線 + 行銷(M5–M8)</h3>
+      <p><b>目標:</b>真正開賣並導流。</p>
+      <p><b>任務:</b>台港星+日內銷正式上線;行銷代理做各國在地化文案/素材、SEO/ASO、KOL、廣告投放(Meta/Google/LINE/字節);同步上架當地主流 marketplace;成效儀表板;合規行銷(避療效宣稱)。</p>
+      <p><b>交付:</b>首波營收、行銷成效報表。<b>依賴:</b>P2 平台、P3 出貨。</p></div>
+    <div class="card"><h3>P5 擴張·多品類·自學習(M8–M18)</h3>
+      <p><b>目標:</b>規模化。</p>
+      <p><b>任務:</b>第二波(馬/韓/泰)、第三波(中東/印度)+中國跨境;加海產/食品等品類(沿用知識庫);法規情報+展覽巡檢持續回灌;學習迴圈優化;平台化成自助 SaaS。</p>
+      <p><b>交付:</b>全亞洲覆蓋、多品類、可複製平台。<b>依賴:</b>前述全部。</p></div>
+  </div>
+
+  <h2>里程碑追蹤(可勾選,存本機)</h2>
+  <ul class="checklist" id="roadmapList"></ul>
+
+  <h2>每階段「AI 代理做什麼」對照</h2>
+  <table>
+    <tr><th>環節</th><th>負責代理</th><th>自動化重點</th></tr>
+    <tr><td>找供應商·談銷售權</td><td>供應商邀約</td><td>名錄→日文邀約→資訊/樣品→合約→上鏈</td></tr>
+    <tr><td>能不能賣到哪</td><td>法規情報</td><td>各國准入即時判定,餵給平台准入過濾</td></tr>
+    <tr><td>備證·填單</td><td>文件申辦</td><td>品項×目的地文件清單、表單預填</td></tr>
+    <tr><td>報關·物流</td><td>通關物流</td><td>報關行/3PL/冷鏈介接、稅費、追蹤、標籤</td></tr>
+    <tr><td>目的地行銷</td><td>行銷在地化</td><td>多語文案、KOL、廣告、通路、成效</td></tr>
+    <tr><td>進度·知識沉澱</td><td>進度知識</td><td>記錄、更新平台、回灌知識庫</td></tr>
+  </table>
+  <div class="note">風險與關鍵路徑:<b>P1 供應商簽約</b>與<b>日本工廠目的國認證</b>是最長前置(部分國家 4–6 個月),建議與 P2 平台開發並行啟動;中國寵食一般貿易未開放,首期以跨境電商試點。</div>
+</section>
+
 <!-- ============ MARKETING ============ -->
 <section class="tab" id="mkt">
   <h1>全亞洲行銷佈署</h1>
@@ -923,7 +986,43 @@ function renderExpos(){
   document.getElementById('expoWatch').textContent='監控中(待主辦公告日期):Pet博(Petan)、FOODEX JAPAN(食品)、Japan International Seafood Show(海產)——品類擴充後自動納入。';
 }
 
-renderChecklist();renderLog();renderTools();renderExpos();
+// ---------- 建置藍圖里程碑 ----------
+const ROADMAP_KEY='petexport_roadmap';
+const roadmapItems=[
+  'P0 確立品類/品牌/AI營運模型與知識庫',
+  'P0 選定首波市場(台/港/星+日內銷)與金流法務架構',
+  'P1 建立日本供應商名錄(展會+漁協/工廠)',
+  'P1 供應商邀約信發送與商品資訊收集',
+  'P1 索取樣品並評估',
+  'P1 簽訂 FOB/CIF 銷售權合約(含上鏈留痕)',
+  'P1 盤點各廠目的國工廠認證狀態',
+  'P2 平台 MVP:多語多幣別、會員、金流',
+  'P2 商品上架(由供應商主檔)+ AI 定價/成本引擎',
+  'P2 准入過濾(只對可進口市場顯示品項)',
+  'P3 文件申辦自動化(品項×目的地)',
+  'P3 報關行/3PL/冷鏈介接 + 稅費試算',
+  'P3 中文/在地標籤合規',
+  'P3 首批試出貨(台/港/星)成功通關',
+  'P4 首波市場正式上線',
+  'P4 各國在地化行銷 + KOL/廣告投放',
+  'P4 同步上架當地主流 marketplace + 成效儀表板',
+  'P5 第二波市場(馬/韓/泰)擴張',
+  'P5 加入海產/食品等新品類',
+  'P5 學習迴圈優化 + 平台化 SaaS'
+];
+function loadRoadmap(){return JSON.parse(localStorage.getItem(ROADMAP_KEY)||'{}');}
+function renderRoadmap(){
+  const st=loadRoadmap();const ul=document.getElementById('roadmapList');if(!ul)return;ul.innerHTML='';
+  roadmapItems.forEach((t,i)=>{
+    const li=document.createElement('li');
+    const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!st[i];
+    cb.onchange=()=>{const s=loadRoadmap();s[i]=cb.checked;localStorage.setItem(ROADMAP_KEY,JSON.stringify(s));};
+    const sp=document.createElement('span');sp.textContent=t;
+    li.appendChild(cb);li.appendChild(sp);ul.appendChild(li);
+  });
+}
+
+renderChecklist();renderLog();renderTools();renderExpos();renderRoadmap();
 </script>
 </body>
 </html>
